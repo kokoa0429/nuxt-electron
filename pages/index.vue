@@ -10,8 +10,7 @@
       md6
     >
       <div class="text-center">
-        <logo />
-        <vuetify-logo />
+        <v-button v-on:click="sushiClick()">hi sushi</v-button>
       </div>
       <v-card>
         <v-card-title class="headline">
@@ -87,11 +86,19 @@
 <script>
 import Logo from '~/components/Logo.vue'
 import VuetifyLogo from '~/components/VuetifyLogo.vue'
+import {ipcRenderer, remote} from "electron"
 
 export default {
   components: {
     Logo,
     VuetifyLogo
+  },
+  methods: {
+    sushiClick: async function () {
+      //this.loading = true
+      // this.result = await ipcRenderer.invoke("sushi", "sushi")
+      //this.loading = false
+    }
   }
 }
 </script>
