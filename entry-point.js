@@ -1,9 +1,9 @@
 const http = require("http");
 const path = require("path");
 const { Nuxt, Builder } = require("nuxt");
-let config = require("./nuxt.config.js");
+let config = require("./src/renderer/nuxt.config.js");
 
-config.rootDir = __dirname;
+config.rootDir = path.resolve(path.join(__dirname, "src/renderer/"));
 
 const nuxt = new Nuxt(config);
 const builder = new Builder(nuxt);
