@@ -1,9 +1,12 @@
 const http = require("http");
 const path = require("path");
 const { Nuxt, Builder } = require("nuxt");
-let config = require("./src/renderer/nuxt.config.js");
 
-config.rootDir = path.resolve(path.join(__dirname, "src/renderer/"));
+const mainDir = path.join(__dirname, "src/main/");
+const rendererDir = path.join(__dirname, "src/renderer/");
+
+const config = require(path.join(rendererDir, "nuxt.config.js"));
+config.rootDir = path.resolve(rendererDir);
 
 const nuxt = new Nuxt(config);
 const builder = new Builder(nuxt);
@@ -19,31 +22,30 @@ if (config.dev) {
     _NUXT_URL_ = `http://localhost:${server.address().port}`;
     console.log(`Nuxt working on ${_NUXT_URL_}`);
 } else {
-    _NUXT_URL_ = "file://" + __dirname + "/dist/index.html";
+  _NUXT_URL_ = `file:///index.html`;
 }
 
-let win = null;
 const { BrowserWindow, app, protocol } = require("electron");
-const url = require('url');
 
 app.on('ready', () => {
     protocol.interceptFileProtocol('file', (req, callback) => {
         const requestedUrl = req.url.substr(7);
 
         if (path.isAbsolute(requestedUrl)) {
-            callback(path.normalize(path.join(__dirname + "/dist", requestedUrl)));
+            callback(path.normalize(path.join(rendererDir, "dist", requestedUrl)));
         } else {
             callback(requestedUrl);
         }
     });
 });
 
+let win = null;
 const newWin = () => {
     win = new BrowserWindow({
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
-            preload: path.resolve(path.join(__dirname, "src/main/preload.js"))
+            preload: path.resolve(path.join(mainDir, "preload.js"))
         }
     });
     win.on("closed", () => (win = null));
@@ -62,16 +64,11 @@ const newWin = () => {
         };
         pollServer();
     } else {
-        //return win.loadURL(_NUXT_URL_);
-        return win.loadURL(url.format({
-            pathname: '/index.html',
-            protocol: 'file:',
-            slashes: true,
-          }))
+        return win.loadURL(_NUXT_URL_);
     }
 };
 app.on("ready", newWin);
 app.on("window-all-closed", () => app.quit());
 app.on("activate", () => win === null && newWin());
 
-require('./src/main/index')
+require(path.join(mainDir, 'index'))
