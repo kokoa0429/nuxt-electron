@@ -51,16 +51,6 @@ const newWin = () => {
     });
     win.on("closed", () => (win = null));
     if (config.dev) {
-        const {
-            default: installExtension,
-            VUEJS_DEVTOOLS
-        } = require("electron-devtools-installer");
-        installExtension(VUEJS_DEVTOOLS.id)
-            .then(name => {
-                console.log(`Added Extension:  ${name}`);
-                win.webContents.openDevTools();
-            })
-            .catch(err => console.log("An error occurred: ", err));
         const pollServer = () => {
             http
                 .get(_NUXT_URL_, res => {
@@ -86,3 +76,7 @@ const newWin = () => {
 app.on("ready", newWin);
 app.on("window-all-closed", () => app.quit());
 app.on("activate", () => win === null && newWin());
+
+ipcMain.handle('sushi', async (event, data) => {
+  return data.toUpperCase()
+})
