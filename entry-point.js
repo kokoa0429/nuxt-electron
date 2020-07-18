@@ -45,7 +45,7 @@ const newWin = () => {
     win = new electron.BrowserWindow({
         webPreferences: {
             nodeIntegration: false,
-            contextIsolation: false,
+            contextIsolation: true,
             preload: path.resolve(path.join(__dirname, "preload.js"))
         }
     });
