@@ -23,11 +23,8 @@ if (config.dev) {
 }
 
 let win = null;
-const electron = require("electron");
+const { BrowserWindow, app, protocol } = require("electron");
 const url = require('url');
-const app = electron.app;
-const protocol = electron.protocol;
-const ipcMain = electron.ipcMain;
 
 app.on('ready', () => {
     protocol.interceptFileProtocol('file', (req, callback) => {
@@ -42,11 +39,11 @@ app.on('ready', () => {
 });
 
 const newWin = () => {
-    win = new electron.BrowserWindow({
+    win = new BrowserWindow({
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
-            preload: path.resolve(path.join(__dirname, "preload.js"))
+            preload: path.resolve(path.join(__dirname, "src/main/preload.js"))
         }
     });
     win.on("closed", () => (win = null));
@@ -77,6 +74,4 @@ app.on("ready", newWin);
 app.on("window-all-closed", () => app.quit());
 app.on("activate", () => win === null && newWin());
 
-ipcMain.handle('sushi', async (event, data) => {
-  return data.toUpperCase()
-})
+require('./src/main/index')
