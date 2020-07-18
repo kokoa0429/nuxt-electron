@@ -34,7 +34,11 @@ let win = null // Current window
 const electron = require('electron')
 const app = electron.app
 const newWin = () => {
-    win = new electron.BrowserWindow({})
+    win = new electron.BrowserWindow({
+        webPreferences: {
+          webSecurity: false,
+          nodeIntegration: true
+        }})
     // win.maximize()
     win.on('closed', () => win = null)
     if (config.dev) {
@@ -54,7 +58,9 @@ const newWin = () => {
         }
         pollServer()
     } else {
-        return win.loadURL(_NUXT_URL_)
+        console.log(_NUXT_URL_)
+        console.log("hisushi")
+        return win.loadURL("C:\\Users\\kokoa\\Documents\\GitHub\\nuxt-electron\\dist\\index.html")
     }
 }
 app.on('ready', newWin)
