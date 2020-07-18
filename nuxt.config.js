@@ -9,6 +9,7 @@ module.exports = {
   */
   mode: 'spa',
   srcDir: 'app',
+  buildDir: 'nuxt-dist',
   /*
   ** Nuxt target
   ** See https://nuxtjs.org/api/configuration-target

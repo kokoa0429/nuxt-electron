@@ -22,7 +22,7 @@ if (config.dev) {
     console.log(`Nuxt working on ${_NUXT_URL_}`)
 } else {
 
-    _NUXT_URL_ = 'file://' + __dirname + '/dist/index.html';
+    _NUXT_URL_ = 'file://' + __dirname + '/nuxt-dist/index.html';
 
 }
 
@@ -60,7 +60,7 @@ const newWin = () => {
     } else {
         console.log(_NUXT_URL_)
         console.log("hisushi")
-        return win.loadURL("C:\\Users\\kokoa\\Documents\\GitHub\\nuxt-electron\\dist\\index.html")
+        return win.loadURL(_NUXT_URL_)
     }
 }
 app.on('ready', newWin)

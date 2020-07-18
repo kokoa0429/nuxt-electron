@@ -1,0 +1,14 @@
+[
+  {
+    "name": "inspire",
+    "path": "/inspire",
+    "component": "C:\\\\Users\\\\kokoa\\\\Documents\\\\GitHub\\\\nuxt-electron\\\\app\\\\pages\\\\inspire.vue",
+    "chunkName": "pages/inspire"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "C:\\\\Users\\\\kokoa\\\\Documents\\\\GitHub\\\\nuxt-electron\\\\app\\\\pages\\\\index.vue",
+    "chunkName": "pages/index"
+  }
+]
