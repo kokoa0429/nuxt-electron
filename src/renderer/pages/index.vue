@@ -94,7 +94,7 @@ export default {
   },
   methods: {
     sushiClick: async function () {
-      alert(await ipcRenderer.invoke("sushi", "sushi"))
+      alert(await api.sushi("sushi"))
     }
   }
 }
